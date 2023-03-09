@@ -6,7 +6,7 @@ import (
 
 // Get Books
 func GetBooks(InPg *PgDB, limit int) (data []presentation.Book, err error) {
-	respond := InPg.Master.Limit(limit).Find(data)
+	respond := InPg.Master.Table("books").Limit(limit).Find(&data)
 	if respond.Error != nil {
 		return data, respond.Error
 	}
@@ -16,7 +16,7 @@ func GetBooks(InPg *PgDB, limit int) (data []presentation.Book, err error) {
 
 // Get Book
 func GetBook(InPg *PgDB, id string) (data presentation.Book, err error) {
-	respond := InPg.Master.Where("id = ?", id).Find(data)
+	respond := InPg.Master.Table("books").Where("id = ?", id).Find(&data)
 	if respond.Error != nil {
 		return data, respond.Error
 	}
@@ -26,7 +26,7 @@ func GetBook(InPg *PgDB, id string) (data presentation.Book, err error) {
 
 // Add Book
 func AddBook(InPg *PgDB, data presentation.Book) (presentation.Book, error) {
-	respond := InPg.Master.Create(&data)
+	respond := InPg.Master.Table("books").Create(&data)
 	if respond.Error != nil {
 		return data, respond.Error
 	}
@@ -36,7 +36,7 @@ func AddBook(InPg *PgDB, data presentation.Book) (presentation.Book, error) {
 
 // Update Book
 func UpdateBook(InPg *PgDB, id string, data presentation.Book) error {
-	respond := InPg.Master.Where("id = ?", id).Updates(data)
+	respond := InPg.Master.Table("books").Where("id = ?", id).Updates(&data)
 	if respond.Error != nil {
 		return respond.Error
 	}
@@ -45,8 +45,8 @@ func UpdateBook(InPg *PgDB, id string, data presentation.Book) error {
 }
 
 // Delete Book
-func DeleteBook(InPg *PgDB, id string, data presentation.Book) error {
-	respond := InPg.Master.Where("id = ?", id).Delete(data)
+func DeleteBook(InPg *PgDB, data presentation.Book) error {
+	respond := InPg.Master.Table("books").Delete(&data)
 	if respond.Error != nil {
 		return respond.Error
 	}
