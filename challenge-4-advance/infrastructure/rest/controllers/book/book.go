@@ -93,6 +93,7 @@ func (c *Controller) GetAllBooks(ctx *gin.Context) {
 // @Param book_id path int true "id of book"
 // @Success 200 {object} domainBook.Book
 // @Failure 400 {object} MessageResponse
+// @Failure 404 {object} MessageResponse
 // @Failure 500 {object} MessageResponse
 // @Router /book/{book_id} [get]
 func (c *Controller) GetBookByID(ctx *gin.Context) {
@@ -113,7 +114,16 @@ func (c *Controller) GetBookByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, domainBook)
 }
 
-// UpdateBook is the controller to update a book
+// UpdateBook godoc
+// @Tags book
+// @Summary Update books by ID
+// @Descriptioniption Update Books by ID on the system
+// @Param book_id path int true "id of book"
+// @Success 200 {object} domainBook.Book
+// @Failure 400 {object} MessageResponse
+// @Failure 404 {object} MessageResponse
+// @Failure 500 {object} MessageResponse
+// @Router /book/{book_id} [put]
 func (c *Controller) UpdateBook(ctx *gin.Context) {
 	bookID, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
 	if err != nil {
@@ -147,7 +157,15 @@ func (c *Controller) UpdateBook(ctx *gin.Context) {
 
 }
 
-// DeleteBook is the controller to delete a book
+// DeleteBook godoc
+// @Tags book
+// @Summary Delete books by ID
+// @Descriptioniption Delete Books by ID on the system
+// @Param book_id path int true "id of book"
+// @Success 200 {object} domainBook.Book
+// @Failure 400 {object} MessageResponse
+// @Failure 500 {object} MessageResponse
+// @Router /book/{book_id} [delete]
 func (c *Controller) DeleteBook(ctx *gin.Context) {
 	bookID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
