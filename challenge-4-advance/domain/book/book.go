@@ -2,8 +2,6 @@ package book
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Book struct {
@@ -13,7 +11,7 @@ type Book struct {
 	Description string `json:"description" example:"book description"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	DeletedAt   *gorm.DeletedAt
+	DeletedAt   time.Time
 }
 
 func (*Book) TableName() string {

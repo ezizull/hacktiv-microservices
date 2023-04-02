@@ -1,4 +1,149 @@
+definitions:
+  book.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  book.NewBookRequest:
+    properties:
+      author:
+        example: Roche
+        type: string
+      description:
+        example: Something
+        type: string
+      title:
+        example: Book
+        type: string
+    required:
+    - author
+    - description
+    - title
+    type: object
+  microservices_challenge-4-advance_application_usecases_book.PaginationResultBook:
+    properties:
+      current:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/microservices_challenge-4-advance_domain_book.Book'
+        type: array
+      limit:
+        type: integer
+      nextCursor:
+        type: integer
+      numPages:
+        type: integer
+      prevCursor:
+        type: integer
+      total:
+        type: integer
+    type: object
+  microservices_challenge-4-advance_domain_book.Book:
+    properties:
+      author:
+        example: mr. author
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      description:
+        example: book description
+        type: string
+      id:
+        type: integer
+      title:
+        example: book title
+        type: string
+      updatedAt:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /book:
+    get:
+      description: Get all Books on the system
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: string
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/microservices_challenge-4-advance_application_usecases_book.PaginationResultBook'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/book.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/book.MessageResponse'
+      summary: Get all Books
+      tags:
+      - book
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/book.NewBookRequest'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/microservices_challenge-4-advance_domain_book.Book'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/book.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/book.MessageResponse'
+      summary: Create New Book
+      tags:
+      - book
+  /book/{book_id}:
+    get:
+      parameters:
+      - description: id of book
+        in: path
+        name: book_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/microservices_challenge-4-advance_domain_book.Book'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/book.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/book.MessageResponse'
+      summary: Get books by ID
+      tags:
+      - book
 swagger: "2.0"

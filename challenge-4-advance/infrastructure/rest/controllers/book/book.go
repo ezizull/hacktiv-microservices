@@ -23,7 +23,7 @@ type Controller struct {
 // @Accept  json
 // @Produce  json
 // @Param data body NewBookRequest true "body data"
-// @Success 200 {object} domainBook.Book
+// @Success 202 {object} domainBook.Book
 // @Failure 400 {object} MessageResponse
 // @Failure 500 {object} MessageResponse
 // @Router /book [post]
@@ -47,7 +47,7 @@ func (c *Controller) NewBook(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, domainBook)
+	ctx.JSON(http.StatusCreated, domainBook)
 }
 
 // GetAllBooks godoc
