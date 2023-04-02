@@ -49,10 +49,20 @@ func (s *Service) GetByMap(medicineMap map[string]interface{}) (*bookDomain.Book
 
 // Delete is a function that deletes a book by id
 func (s *Service) Delete(id int) error {
+	_, err := s.BookRepository.GetByID(int(id))
+	if err != nil {
+		return err
+	}
+
 	return s.BookRepository.Delete(id)
 }
 
 // Update is a function that updates a book by id
 func (s *Service) Update(id uint, medicineMap map[string]interface{}) (*bookDomain.Book, error) {
+	_, err := s.BookRepository.GetByID(int(id))
+	if err != nil {
+		return nil, err
+	}
+
 	return s.BookRepository.Update(id, medicineMap)
 }
