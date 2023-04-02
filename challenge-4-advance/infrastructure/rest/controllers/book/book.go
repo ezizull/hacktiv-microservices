@@ -163,6 +163,7 @@ func (c *Controller) UpdateBook(ctx *gin.Context) {
 // @Descriptioniption Delete Books by ID on the system
 // @Param book_id path int true "id of book"
 // @Success 200 {object} domainBook.Book
+// @Failure 404 {object} MessageResponse
 // @Failure 400 {object} MessageResponse
 // @Failure 500 {object} MessageResponse
 // @Router /book/{book_id} [delete]
